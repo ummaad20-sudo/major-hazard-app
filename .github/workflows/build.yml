@@ -11,13 +11,19 @@ jobs:
       image: kivy/buildozer:latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Clean Build
+        run: |
+          buildozer android clean
 
       - name: Build APK
-        run: yes | buildozer android debug
+        run: |
+          buildozer android debug
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: RekapRuijiePro-APK
+          name: 13MajorHazard-APK
           path: bin/*.apk
