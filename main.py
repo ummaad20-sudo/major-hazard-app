@@ -1,204 +1,214 @@
 from kivy.app import App
 from kivy.uix.screenmanager import ScreenManager, Screen
-from kivy.lang import Builder
+from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.button import Button
+from kivy.uix.label import Label
+from kivy.uix.scrollview import ScrollView
+from kivy.uix.gridlayout import GridLayout
 
-# ================= FULL DATA =================
+# ================= DATA =================
 daftar_hazard = [
 {"judul": "Bekerja dengan logam panas",
-"detail": """================ FURNACE ================
-1. Bagi yang tidak berkepentingan DILARANG KERAS memasuki area tungku pembakaran atau furnace.
-2. Pada saat proses aktivitas tapping pekerja harus menjaga jarak aman dari titik keluarnya metal atau slag.
-3. Dilarang keras meloncati launder saat tapping kecuali akses tersedia.
-4. Gunakan APD tahan api lengkap.
-5. Pastikan celana menutupi sepatu.
-6. Pastikan pipa oksigen tidak bocor.
-7. Jika ada getaran/suhu naik segera tinggalkan area.
-8. Thermocouple wajib APD lengkap.
-NB: Jika furnace abnormal segera evakuasi.
+"detail": """FURNACE
+1. Dilarang masuk area tanpa izin
+2. Jaga jarak saat tapping
+3. Gunakan APD lengkap tahan panas
 
-================ CASTING ================
-1. Dilarang menaiki mesin saat berputar.
-2. Hindari titik jepit.
-3. Pastikan mesin kering.
-4. Dilarang di area jatuh produk.
+CASTING
+- Dilarang naik mesin saat berputar
+- Pastikan area aman
 
-================ SLAG POND ================
-1. Pastikan pagar terpasang.
-2. Gunakan 3 titik kontak.
-3. Bunyikan alarm sebelum tapping.
-
-================ HOT STOVE ================
-1. Gunakan APD lengkap.
-2. Dilarang merokok.
-
-================ TIPS ================
-- Bunyi sirine sebelum tapping
-- Pastikan APD lengkap
+SLAG POND
+- Gunakan 3 titik kontak
+- Dilarang mendekat saat proses
 """},
 
 {"judul": "Bekerja di Ruang Terbatas",
-"detail": """================ CONFINED SPACE ================
-1. Wajib APD.
-2. Cek gas sebelum masuk.
-3. Gunakan blower.
-4. Sistem body pair.
-5. Isolasi energi (LOTO).
-6. SCBA tersedia.
-
-================ TIPS ================
-- Pastikan izin kerja
-- Pastikan alat darurat tersedia
+"detail": """CONFINED SPACE
+1. Cek gas sebelum masuk
+2. Gunakan blower
+3. Sistem kerja berpasangan
+4. Gunakan APD lengkap
 """},
 
 {"judul": "Bekerja di ketinggian",
-"detail": """================ WORKING AT HEIGHT ================
-1. Wajib permit kerja.
-2. Gunakan full body harness.
-3. Gunakan lifeline.
-4. Gunakan 3 titik kontak.
-5. Pastikan scaffolding aman.
-
-================ TIPS ================
-- Pastikan harness terpasang
+"detail": """WORKING AT HEIGHT
+1. Gunakan full body harness
+2. Gunakan lifeline
+3. Pastikan pekerja terlatih
 """},
 
-{"judul": "LOTO",
-"detail": """================ LOTO ================
-1. Isolasi energi.
-2. Gunakan SOP.
-3. Tidak boleh buka LOTO orang lain.
-4. Gunakan alat non logam.
-
-================ TIPS ================
-- Identifikasi semua energi
+{"judul": "Lock Out & Tag Out (LOTO)",
+"detail": """LOTO
+1. Isolasi semua energi
+2. Gunakan lock pribadi
+3. Dilarang buka LOTO orang lain
 """},
 
-{"judul": "Boiler",
-"detail": """================ BOILER ================
-1. Monitor tekanan.
-2. Safety valve harus aktif.
-3. Air cukup.
-4. Sertifikasi wajib.
-
-================ TIPS ================
-- Monitor rutin
+{"judul": "Boiler dan bejana tekan",
+"detail": """BOILER
+1. Cek safety valve
+2. Monitor tekanan
+3. Operator wajib bersertifikat
 """},
 
 {"judul": "Peralatan berputar",
-"detail": """================ ROTATING ================
-1. Gunakan guard.
-2. LOTO saat maintenance.
-3. Gunakan emergency stop.
-4. Hindari area berputar.
-
-================ TIPS ================
-- Pastikan semua aman
+"detail": """ROTATING EQUIPMENT
+1. Gunakan guard
+2. Hindari pakaian longgar
+3. Gunakan emergency stop
 """},
 
-{"judul": "Lifting",
-"detail": """================ LIFTING ================
-1. Gunakan SWL sesuai.
-2. Operator bersertifikat.
-3. Komunikasi rigger.
-4. Area steril.
-
-================ TIPS ================
-- Gunakan permit
+{"judul": "Lifting activity",
+"detail": """LIFTING
+1. Gunakan sling sesuai SWL
+2. Area harus steril
+3. Operator bersertifikat
 """},
 
 {"judul": "Kelistrikan",
-"detail": """================ ELECTRICAL ================
-1. Gunakan APD.
-2. Gunakan LOTO.
-3. Gunakan body pair.
-4. Gunakan alat deteksi listrik.
-
-================ TIPS ================
-- Pastikan SOP
+"detail": """ELECTRICAL
+1. Gunakan APD listrik
+2. LOTO wajib
+3. Gunakan alat deteksi listrik
 """},
 
-{"judul": "Alat berat",
-"detail": """================ HEAVY EQUIPMENT ================
-1. Operator wajib SIO/SIMPER.
-2. Lakukan P2H.
-3. Jaga jarak aman.
-4. Ikuti rambu.
-
-================ TIPS ================
-- Pastikan kondisi unit
+{"judul": "Kendaraan & alat berat",
+"detail": """HEAVY EQUIPMENT
+1. Operator wajib SIMPER
+2. Lakukan P2H
+3. Jaga jarak aman
 """},
 
-{"judul": "Roda",
-"detail": """================ TYRE ================
-1. Gunakan tyre cage.
-2. Jaga jarak.
-3. Gunakan pressure gauge.
-
-================ TIPS ================
-- Pastikan tekanan sesuai
+{"judul": "Perlengkapan roda",
+"detail": """TYRE
+1. Gunakan tyre cage
+2. Jaga jarak aman
+3. Gunakan alat ukur tekanan
 """},
 
-{"judul": "Tebing",
-"detail": """================ SLOPE ================
-1. Pantau longsor.
-2. Gunakan safety berm.
-3. Hindari area bawah tebing.
-
-================ TIPS ================
-- Inspeksi rutin
+{"judul": "Lereng tebing",
+"detail": """SLOPE
+1. Waspada longsor
+2. Gunakan safety berm
+3. Hentikan saat hujan
 """},
 
-{"judul": "Air",
-"detail": """================ WATER ================
-1. Gunakan life jacket.
-2. Gunakan lifebuoy.
-3. Tidak bekerja sendiri.
-
-================ TIPS ================
-- Pastikan aman
+{"judul": "Sekitar air",
+"detail": """WATER AREA
+1. Gunakan life jacket
+2. Jangan kerja sendiri
+3. Siapkan alat darurat
 """},
 
 {"judul": "Bahan kimia",
-"detail": """================ CHEMICAL ================
-1. Gunakan MSDS.
-2. Gunakan APD.
-3. Ikuti SOP.
-
-================ TIPS ================
-- Jangan panik saat darurat
+"detail": """CHEMICAL
+1. Gunakan MSDS
+2. Gunakan APD
+3. Simpan sesuai standar
 """},
 ]
 
-KV = '''
-ScreenManager:
-    MenuScreen:
-    DetailScreen:
 
-<MenuScreen>:
-    name: "menu"
+# ================= SCREEN MENU =================
+class MenuScreen(Screen):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
 
-    ScrollView:
-        GridLayout:
-            cols: 1
-            size_hint_y: None
-            height: self.minimum_height
+        layout = BoxLayout(orientation='vertical', padding=10, spacing=10)
 
-            Label:
-                text: "13 MAJOR HAZARD"
-                font_size: 28
-                size_hint_y: None
-                height: 80
+        title = Label(
+            text="13 MAJOR HAZARD",
+            size_hint_y=None,
+            height=60,
+            font_size=22,
+            bold=True
+        )
 
-            BoxLayout:
-                orientation: 'vertical'
-                size_hint_y: None
-                height: self.minimum_height
-                id: hazard_list
+        layout.add_widget(title)
 
-            Button:
-                text: "Keluar"
-                size_hint_y: None
-                height: 60
+        scroll = ScrollView()
+
+        grid = GridLayout(cols=1, spacing=10, size_hint_y=None)
+        grid.bind(minimum_height=grid.setter('height'))
+
+        for i, item in enumerate(daftar_hazard):
+            btn = Button(
+                text=f"{i+1}. {item['judul']}",
+                size_hint_y=None,
+                height=60
+            )
+            btn.bind(on_press=lambda x, idx=i: self.buka_detail(idx))
+            grid.add_widget(btn)
+
+        scroll.add_widget(grid)
+        layout.add_widget(scroll)
+
+        self.add_widget(layout)
+
+    def buka_detail(self, index):
+        self.manager.get_screen("detail").tampilkan(index)
+        self.manager.current = "detail"
+
+
+# ================= SCREEN DETAIL =================
+class DetailScreen(Screen):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+        self.layout = BoxLayout(orientation='vertical', padding=10, spacing=10)
+
+        self.title = Label(
+            text="",
+            size_hint_y=None,
+            height=50,
+            font_size=18,
+            bold=True
+        )
+
+        self.content = Label(
+            text="",
+            size_hint_y=None,
+            font_size=16
+        )
+        self.content.bind(texture_size=self.content.setter('size'))
+
+        scroll = ScrollView()
+        scroll.add_widget(self.content)
+
+        btn_back = Button(
+            text="Kembali",
+            size_hint_y=None,
+            height=60
+        )
+        btn_back.bind(on_press=self.kembali)
+
+        self.layout.add_widget(self.title)
+        self.layout.add_widget(scroll)
+        self.layout.add_widget(btn_back)
+
+        self.add_widget(self.layout)
+
+    def tampilkan(self, index):
+        hazard = daftar_hazard[index]
+        self.title.text = hazard["judul"]
+        self.content.text = hazard["detail"]
+
+    def kembali(self, instance):
+        self.manager.current = "menu"
+
+
+# ================= APP =================
+class HazardApp(App):
+    def build(self):
+        sm = ScreenManager()
+        sm.add_widget(MenuScreen(name="menu"))
+        sm.add_widget(DetailScreen(name="detail"))
+        return sm
+
+
+if __name__ == "__main__":
+    HazardApp().run()                height: 60
                 on_release: app.stop()
 
 <DetailScreen>:
