@@ -1,8 +1,8 @@
 
 
-title = Rekap Voucher Ruijie
-package.name = rekapruijie
-package.domain = com.ruijie
+title = 13 Major Hazard
+package.name = 13MajorHazard
+package.domain = com.13major
 
 source.dir = .
 source.include_exts = py,png,jpg,kv
