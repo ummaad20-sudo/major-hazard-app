@@ -1,54 +1,25 @@
-[app]
 
-# (str) Title of your application
-title = 13 Major Hazard
 
-# (str) Package name
-package.name = majorhazard
+title = Rekap Voucher Ruijie
+package.name = rekapruijie
+package.domain = com.ruijie
 
-# (str) Package domain
-package.domain = com.safety.app
-
-# (str) Source code directory
 source.dir = .
+source.include_exts = py,png,jpg,kv
 
-# (list) Source files to include
-source.include_exts = py,kv,png,jpg
-
-# (str) Application version
 version = 1.0
 
-# (list) Application requirements
-requirements = python3,kivy
+requirements = python3,kivy,openpyxl,plyer
 
-# (str) Orientation
 orientation = portrait
-
-# (bool) Fullscreen
 fullscreen = 0
 
-# (list) Permissions
-android.permissions = INTERNET
+android.permissions = READ_EXTERNAL_STORAGE, ,WRITE_EXTERNAL_STORAGE
 
-# (int) Android API
-android.api = 33
-android.minapi = 21
-android.sdk = 33
+android.api = 34
+android.minapi = 24
+android.sdk = 31
 android.ndk = 25b
-
-# (str) Entry point
-entrypoint = main.py
-
-# (bool) Log level
-log_level = 2
-
-# (str) Presplash
-# presplash.filename = %(source.dir)s/data/presplash.png
-
-# (str) Icon
-# icon.filename = %(source.dir)s/data/icon.png
-
 
 [buildozer]
 log_level = 2
-warn_on_root = 1
