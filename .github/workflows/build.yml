@@ -11,19 +11,25 @@ jobs:
       image: kivy/buildozer:latest
 
     steps:
-      - name: Checkout
+      - name: Checkout Repository
         uses: actions/checkout@v4
+
+      - name: Show Files (Debug)
+        run: ls -la
 
       - name: Clean Build
         run: |
-        yes | buildozer android clean
+          yes | buildozer android clean
 
       - name: Build APK
         run: |
-         yes | buildozer android debug
+          yes | buildozer android debug
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: 13MajorHazard-APK
           path: bin/*.apk
+
+      - name: Done
+        run: echo "APK build selesai!"
